@@ -1,0 +1,46 @@
+
+var solc = require('solc')
+
+var fs = require('fs')
+
+var Web = require('web3')
+
+var web = new Web (new Web.providers.HttpProvider('http://127.0.0.1:8545'))
+
+
+web.isConnected()
+
+var readFile = fs.readFileSync("C:\\HelloWorld.sol")
+
+var compiledCode = solc.compile(readFile.toString(), 1)
+
+var byteCode = compiledCode.contracts[':HelloWorld'].bytecode
+
+var abiDefinition = JSON.parse(compiledCode.contracts[':HelloWorld'].interface)
+
+var contract = web.eth.contract(abiDefinition)
+
+web.personal.unlockAccount(web.eth.accounts[0],"riteshmodi")
+
+var contractDeployment = contract.new({data:'0x' + byteCode, from: web.eth.accounts[0], gas:1000000}, (error, result) => { if(error) {console.log(error); return; } console.log(result); console.log(result.transactionHash); if(result.address) { console.log(result.address); } });
+
+
+
+web.personal.unlockAccount(web.eth.accounts[0],"riteshmodi")
+
+var contractDeployment = contract.new({data:'0x' + byteCode, from: web.eth.accounts[0], gas:1000000}, (error, result) => { if(error) {console.log(error); return; } console.log(result); console.log(result.transactionHash); if(result.address) { console.log(result.address); } });
+
+var thash = "0xC6Da78D9971bD921d04075899F2CCB6Ac3680eF1"
+
+var cont = contract.at(thash)
+
+web.personal.unlockAccount(web.eth.accounts[0],"riteshmodi")
+
+cont.SetValue("Hello Bangalore", {from: web.eth.accounts[0] })
+'0x8a48d40bc7370ad0586b83cf7c6b0097c2af82e9bbbe9e817dd091136375900a'
+
+cont.GetValue({from: web.eth.accounts[0] })
+'Hello Ritesh'
+
+web.eth.accounts[0]
+
